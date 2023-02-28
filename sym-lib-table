@@ -1,0 +1,6 @@
+(sym_lib_table
+  (lib (name "5555980-1")(type "KiCad")(uri "${CUSTOM_RAC1}/TE Connectivity/5555980-1.kicad_sym")(options "")(descr ""))
+  (lib (name "LF353P")(type "KiCad")(uri "${CUSTOM_RAC1}/TI/LF353P.kicad_sym")(options "")(descr ""))
+  (lib (name "TL1100CF160Q")(type "KiCad")(uri "${CUSTOM_RAC1}/ESwitch/TL1100CF160Q.kicad_sym")(options "")(descr ""))
+  (lib (name "MJ-3502N")(type "Legacy")(uri "${CUSTOM_RAC1}/CUI/MJ-3502N.lib")(options "")(descr ""))
+)

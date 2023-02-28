@@ -1,0 +1,287 @@
+See actual Web file archive at
+https://web.archive.org/web/20020226105207/http://www.mactech.com/articles/mactech/Vol.01/01.11/PAL/index.html)
+With added information from http://retro.co.za/ccc/mac/ReverseEngineering/PALs.html
+
+
+PROGRAMMABLE LOGIC IN THE MACINTOSH
+
+512K MAC:
+ 
+ASG  16R6 Disk speed control, sound generator.
+BMU0 16R4 Ram control (read, write, DTACK)
+BMU1 16L8 Address decoding
+LAG  16R8 Video generator
+TSG  16R6 Divide by 2, divide by 4.25.
+TSM  16R4 Generates RAS and CAS for DRAM
+
+The Macintosh uses six HAL devices, of four different types. These types are 
+16L8, 16R8, 16R6, and 16R4.
+
+The 16L8 is very similar to the example I've given, with 8 dedicated input pins, 
+and 8 pins which are programmable as inputs or outputs. The part number, 16L8, 
+means there are 16 possible inputs, 8 possible outputs, and the outputs are active 
+low. The active low outputs can be programmed as active high using DeMorgan's Law, 
+as I described above.
+
+The 16R8 is identical to the 16L8, only there is a D-type flip-flop (register) 
+at the output of each OR term. Figure 10 shows the structure of one registered 
+output term. The 16R6 and 16R4 have 6 and 4 output registers respectively, with 
+the remaining 2 and 4 terms direct combinatorial outputs like the 16L8.
+
+
+MACINTOSH HAL FUNCTIONS
+
+A look at the functions that the Mac's HALs perform give a good feel for the type of 
+applications where programmable logic is used. There are many instances of simple 
+random-logic replacement, but there are also some clever applications that demonstrate 
+the versatility of these devices.
+
+The 6 HALs in the Mac have designators silk-screened on the PC board next to them. 
+I'll refer to them by those names, although I can't figure out what they stand for.
+
+BMU1
+
+BMU1 is a 16L8 device which performs the major address decoding functions. It has 
+as inputs the higher order address lines A21, A22, and A23 from the processor, along 
+with the overlay bit (for a description of the overlay bit, see the August issue). 
+These bits are decoded to generate enable signals for the RAM, ROM, the IWM (disk 
+controller) and the SCC serial chip.
+
+/AS 	 I 	11	 10		GND
+/IWM 	 O 	12	 9	 I 	A21
+/SCCRD	 O 	13	 8	 I 	A22
+/SCCEN	 O 	14	 7	 I 	A23
+/VPA 	 O 	15	 6	 I 	OVERLAY
+/ROM 	 O 	16	 5	 I 	L13
+/RAM 	 O 	17	 4	 I 	/VCA
+VC0 	 O 	18	 3	 I 	VA6
+VC1 	 O 	19	 2	 I 	VA7
+Vcc 		20	 1	 I 	VA8
+
+/IWM   :=  A23 *  A22 * /A21 * /AS             ; 0xC0 0000 - 0xDF FFFF (0xDF E1FF)
+/SCCRD :=  A23 * /A22 * /A21 * /AS             ; 0x80 0000 - 0x9F FFFF (0x9F FFF8)
+/SCCEN :=  A23 * /A22 * /AS                    ; 0x80 0000 - 0xBF FFFF (0x9F FFF8 - RD, 0xBF FFF9 - WR)
+/VPA   :=  A23 *  A22 *  A21 * /AS             ; Synchronous I/O (6800 style) 0xE0 0000 - 0xFF FFFF
+/ROM   := /A23 *  A22 * /A21 * /AS             ; 0x40 0000 - 0x5F FFFF
+        + /A23 * /A22 * /A21 * /AS * OVERLAY   ; 0x00 0000 - 0x1F FFFF when OVERLAY enabled
+        +  A23 * /A22 * /AS                    ; 0x80 0000 - 0xBF FFFF
+        +  A23 * /A21 * /AS                    ; 0x80 0000 - 0x9F FFFF and 0xC0 0000 - 0xDF FFFF
+/RAM   := /A23 * /A22 * /A21 * /AS * /OVERLAY  ; 0x00 0000 - 0x1F FFFF
+        + /A23 *  A22 *  A21 * /AS * OVERLAY   ; 0x60 0000 - 0x7F FFFF when OVERLAY is enabled
+VC0    :=
+VC1    :=
+
+Minimized Product of Sums:
+/IWM = (/AS+A21+A22'+A23');
+/SCCRD = (/AS+A21+A22+A23');
+/SCCEB = (/AS+A22+A23');
+/VPA = (/AS+A21'+A22'+A23');
+/ROM = (A22+A23')(A21+A22')(A22+OVERLAY')(A22'+A23+OVERLAY);
+/RAM = (A22+A23')(A22+OVERLAY)(A21'+A22'+A23+OVERLAY');
+VC0 = (L13'+/VCA+VA6')(L13+/VCA+VA7'+VA8);
+VC1 = (L13'+/VCA+VA6')(L13+/VCA+VA7+VA8');
+
+
+LAG
+
+LAG is a 16R8 device which performs the majority of the video control functions. It 
+has as inputs most of the video address counter outputs, which are decoded to create 
+output signals which load the video shift register, provide the CRT sweep circuitry 
+with horizontal and vertical syncs, increment and reset the video address counters, 
+and switch the RAM address multilplexers between CPU, video, and sound addresses.
+
+/TSEN1 	/OE 	11	10		GND
+/LDPS 	 R 	12	9	 I 	VA0
+/VSYNC	 R 	13	8	 I 	VA1
+/HSYNC	 R 	14	7	 I 	VA2
+VID/u*	 R 	15	6	 I 	TC
+H4 	 R 	16	5	 I 	C1M
+/DMA 	 R 	17	4	 I 	VA3
+RESLYN	 R 	18	3	 I 	VC1
+RESNYB	 R 	19	2	 I 	VC0
+Vcc 		20	1	CLK 	C16M
+
+A 16R8 has eight (+ a clock) inputs and eight outputs.
+Clock: C16M
+Inputs: VC0, VC1, VA0, VA1, VA2, VA3, TC, C1M
+Outputs: /LDPS, /VSYNC, /HSYNC, VID/u*, H4, /DMA, RESLYN, RESNYB
+
+BMU0
+
+BMU0 is a 16R4 device which generates RAM read and write signals from the RAM enable 
+output of BMU1 and the processor R/W line. It is also used as a counter to create 
+two video address lines (VA12 and VA13) because the video counter is only 12 bits 
+wide (VA0-VA11). In addition, it also generates DTACK, the data transfer acknowledge 
+handshake signal to the processor, and synchronizes the output of the video shift 
+register with the master oscillator. This is a very good example of the many 
+different types of functions that can be handled with a single programmable device.
+
+/TSEN0	/CS 	11	10		GND
+/RAM_RD	 O 	12	9	 I 	R/W
+/RAM_RW	 O 	13	8	 I 	L13
+VA12 	 R 	14	7	 I 	L12
+/VCA	 R 	15	6	 I 	VA11
+/VIDOUT	 R 	16	5	 I 	VA10
+VA13 	 R 	17	4	 I 	VA9
+SERVID 	 O 	18	3	 I 	/ROM
+/DTACK	 O 	19	2	 I 	/RAM
+Vcc 		20	1	CLK 	C16M
+
+
+SERVID from the dual LS166 video shifters and VIDOUT to the monitor. 
+
+TSM
+
+TSM is a 16R4 device whose major function is control of the dynamic RAM. For inputs, 
+it has the decoded RAM enable signal, along with the address and data strobes from 
+the processor which signify whether the data transfer will be low byte, hi byte, 
+or word. From these the RAS and CAS strobes are generated, and the row/column address 
+multiplexer is controlled. Until there were PALs, this type of dynamic RAM control 
+function required either about 10-20 discrete TTL packages, or a 40 pin LSI dynamic 
+RAM controller which usually didn't do what you wanted anyway.
+
+/TSEN0	/CS 	11	10		GND
+/CAS0 	 O 	12	9	 I 	/LDS
+/CAS1 	 O 	13	8	 I 	/UDS
+/RAS 	 R 	14	7	 I 	/AS
+TC 	 R 	15	6	 I 	/ROM
+C1M 	 R 	16	5	 I 	/RAM
+C4M 	 R 	17	4	 I 	VID/u*
+C2M 	 O 	18	3	 I 	C8M
+/DTACK	 O 	19	2	 I 	C16M
+Vcc 		20	1	CLK 	C16M
+
+
+PAL16R8	 PAL DESIGN SPECIFICATIONS
+
+16MBUF C16M 8M MU RAMEN ROMEN AS UDS LDS GND 
+TSEN CAS0 CAS1 RAS TC 1M 4M 2M DTACK VCC
+
+RAS is the DRAM Row Address Strobe.
+
+RAS: =       /4M *             /RAS
+     +  8M *  4M *             /RAS + 
+     + /8M *  4M *       /2M * /RAS
+     +  8M * /4M *  1M *        RAS
+     +  8M * /4M * /1M *  2M *  RAS
+     + /8M *  4M * /1M *        RAS *  LDS
+     + /8M *  4M * /1M *        RAS *  UDS
+     + /8M *  4M * /1M *        RAS * /LDS * /UDS * /CAS0
+     + 
+
+TC goes to the LAG and to the video counter (U1F)
+
+TC:= 8M + /4M + 2M +  /1M + RAS
+
+1M: =      /8M *  4M * /2M * 1M * /RAS + 
+     /1M *  8M * /4M * /RAS + 
+     /1M * /8M *  4M * 2M * /RAS + 
+     /1M *              RAS + 
+     /1M * /8M * /4M * /RAS + 
+     /1M * 8M *   4M * /RAS
+
+4M: =                    1M *  RAS + 
+       8M *  4M *  2M * /1M *  RAS + 
+      /8M * /4M *       /1M *  RAS + 
+       8M * /4M *  2M * /1M *  RAS + 
+      /8M *  4M * /2M *       /RAS + 
+there may be a line missing here..... 
+
+2M: = /C16M *       /8M * /4M * /RAS
+    +         /2M + /8M + /4M 
+    +         /2M + /1M + * /TC
+    +  C16M * /2M
+    + /C16M * /8M * /4M * /1M * RAS * /ROMEN * /RAMEN * /AS
+    + /2M * 4M
+    + /2M * 8M * /4M *1M * MU
+
+DTACK := /C16M * /8M * /4M *        /RAS * /AS * /ROMEN *  RAMEN
+      +  /C16M * /8M * /4M * /1M  * /RAS * /AS * /RAMEN *  ROMEN
+      +  /C16M * /8M * /4M *  1M  * /RAS * /AS * /RAMEN *  ROMEN * /MU
+      +  /C16M * /8M *  4M * /1M  *  RAS * /AS * /RAMEN * /ROMEN
+      +  /DTACK * /UDS
+      +  /DATACK * /LDS
+      +  /DATACK * /RAS
+
+This is probably not right for the Mac Plus...
+
+CAS0: =  4M * /2M * /RAS * /DTACK * /RAMEN * ROMEN * /LDS * MU
+      +  4M * /2M * 1M * /RAS * MU
+      + /CAS0 
+      + /RAS
+      +  8M + 4M + /2M * /1M * RAS * /DTACK
+      + /CAS0 * /2M + /1M
+
+CAS1: = 4M * /2M * /RAS * /DTACK * /RAMEN * ROMEN * /UDS * MU
+      + 4M * /2M * 1M * /RAS * MU
+      + /CAS1 + /RAS 
+      
+
+
+ASG
+
+ASG is a 16R6 device which illustrates why PALs can be so valuable. It's primary 
+purpose is to take the 6-bit disk speed value which is fetched at the end of every
+horizontal retrace period and convert it to a pulse-width modulated signal. Basically, 
+it's a 6-bit counter. This leaves a couple of inputs and an output available, which 
+are used to control the loading of the sound generator pulse-width modulator, which 
+is a counter made up of TTL devices. If a discrete counter had been used for the 
+disk PWM, another chip would have been required for the sound PWM load function. 
+Using a PAL for a simple counter function in this instance saved a chip in the design.
+
+As usual, Burrell's new design was very clever. The Macintosh was already continuously 
+fetching data from memory to drive the video display, interleaving memory bandwidth 
+between the display and processor in a similar fashion to the Apple II. But every 
+44 microseconds, there was a "horizontal blanking interval" where no video data was 
+needed, so Burrell used that time to fetch data for the sound. That gave us a sample 
+rate of 22kHz, which would allow us to do frequencies up to 11kHz, which isn't too bad. 
+
+/TSEN2	/OE 	11	 10		GND
+/DMALD	 O 	12	 9	 I 	TC
+PWM 	 R 	13	 8	 I 	/DMA
+N/C 	 R 	14	 7	 I 	RDQ5
+N/C 	 R 	15	 6	 I 	RDQ4
+N/C 	 R 	16	 5	 I 	RDQ3
+N/C 	 R 	17	 4	 I 	RDQ2
+N/C 	 R 	18	 3	 I 	RDQ1
+N/C 	 O 	19	 2	 I 	RDQ0
+Vcc 		20	 1	CLK 	C16MF
+
+
+TSG
+
+This one is my favorite. The TSG is a 16R6 device which illustrates the power of 
+programmable logic. It serves a couple of mundane functions concerning interrupts 
+and the keyboard clock, but by far it's most interesting job is as a clock generator 
+for the SCC serial chip.
+
+The master oscillator frequency in the Macintosh is 15.667 MHz. This is divided by 2 
+in the TSG to get the 7.834 MHz processor clock. In order for the SCC to be able to 
+operate at a baud rate of 230.4 KBaud, which is what AppleTalk requires, it needs an 
+input clock frequency of 3.686 MHz.
+
+If you pull down your calculator desk accessory, you'll find that 15.667 ÷ 3.686 = 4.25. 
+This means that the TSG needs to divide the 15.667 MHz master oscillator by 4.25 in 
+order to get a 3.686 MHz clock. How is this done, since 4.25 is not even an integer, 
+let alone a binary number?
+
+Let's call the 15.667 MHz clock the MO_clk and the 3.686 MHz clock the SCC_clk. For 
+every 17 MO_clk periods there are 4 SCC_clk periods (17 ÷ 4 = 4.25). The way the TSG 
+generates the SCC_clk is count to 4 three times and then count to 5 once 
+(4 + 4 + 4 + 5 = 17). See Figure 11 for a graphical description. Try that using a 
+single TTL counter chip!
+
+TSEN2 	/OE 	11	 10		GND
+D0 	 O 	12	 9	 I 	/VIAIRQ
+N/C 	 R 	13	 8	 I 	/IPL1
+C3.7MF 	 R 	14	 7	 I 	KBD.ACLK
+N/C 	 R 	15	 6	 I 	Eu
+N/C 	 R 	16	 5	 I 	4M
+KBD.SCLK R 	17	 4	 I 	TC
+C8M 	 R 	18	 3	 I 	A19
+/IPL0 	 O 	19	 2	 I 	/VPA
+Vcc 		20	 1	CLK 	C16M
+
+C8M :=
+
+
