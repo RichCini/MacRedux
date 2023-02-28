@@ -30,10 +30,9 @@ layout designers, but I expect that some of these will be self-correcting once I
 adjust the footprints after measuring an actual board. There will likely be
 permanent encroachments given how dense the board is in certain areas.
 
-I would also note that certain components (like the push buttons, keyboard connector, 
-and audio jack) are being replaced with what I think are equivalents, so further 
-adjustments will be needed for those so that they are positioned properly on the 
-planar.
+* Certain components (like the push buttons, keyboard connector, and audio jack) 
+are being replaced with what I think are equivalents, so further adjustments will
+be needed for those so that they are positioned properly on the planar.
 
 * As of now, the PALs have not been fully decoded. The archive includes a text
 file with some notes I've collected on the topic from various places on the Net.
