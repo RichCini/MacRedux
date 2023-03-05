@@ -1,0 +1,78 @@
+18216429929699
+RAC_Custom
+C96ABCM-RA
+Connecteur DIN Europe 96 contacts ABC male couche
+CONN DIN
+0
+98
+97
+RAC_Custom
+DSUB-19_Female_Horizontal
+
+
+0
+21
+20
+RAC_Custom
+DSUB-19_Female_Horizontal_P2.77x2.84mm_EdgePinOffset7.70mm_Housed_MountingHolesOffset9.12mm
+19-pin D-Sub connector, horizontal/angled (90 deg), THT-mount, female, pitch 2.77x2.84mm, pin-PCB-offset 7.7mm, distance of mounting holes 47.1mm, distance of mounting holes to PCB edge 9.12mm, see https://disti-assets.s3.amazonaws.com/tonar/files/datasheets/16730.pdf
+19-pin D-Sub connector horizontal angled 90deg THT female pitch 2.77x2.84mm pin-PCB-offset 7.7mm mounting-holes-distance 47.1mm mounting-hole-offset 47.1mm
+0
+21
+20
+RAC_Custom
+EDAC_02_22_Card_Edge_Connector
+EDAC Edge Connectors
+EDAC card edge
+0
+46
+45
+RAC_Custom
+MA156-12-2
+
+
+0
+24
+24
+RAC_Custom
+MA156-12-2-Peripheral
+
+
+0
+24
+24
+RAC_Custom
+MA156-22-2
+
+
+0
+44
+44
+RAC_Custom
+PC-Power
+PC floppy connector male vertical pc-mount
+Molex 15244742 8981 [obsolete]
+0
+4
+4
+RAC_Custom
+S100_MALE
+Connecteur Bus PC 8 bits
+CONN S100 MALE
+0
+100
+100
+RAC_Custom
+Sullins_02_22_Card_Edge_Connector_RA
+Sullins Edge Connectors
+Sullins card edge RA
+0
+46
+45
+RAC_Custom
+TO-220-3_Horizontal_TabDown_HS
+TO-220-3, Horizontal, RM 2.54mm, see https://www.vishay.com/docs/66542/to-220-1.pdf
+TO-220-3 Horizontal RM 2.54mm
+0
+4
+3
