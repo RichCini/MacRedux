@@ -17,18 +17,18 @@
   )
 
 
-  (text "Board Revision Notes:\n\nCase Label		Serial#							Logic Board Schematic/Part#\nmacintosh		F35xxxxxM0001 to F4xxxxxxxxxxx        820-0086-C/F (630-0101)\nmacintosh 128k	F4xxxxxxM0001 to F5xxxxxxxxxxx        820-0141-A (630-0101)\nmacintosh 512k/e  F44xxxxxM0001 to F7xxxxxxxxxxx        820-0141-A (630-0118)\n\n#6 820-0086-A (ECO M045). MAC512, 200 build, May 1983 Folon 'MacMan' logo. 6th PAL\nhas been added, the TSG (Timing Signal Generator). Uses a transistor-\nbuffered system clock at Y1.\n\n#7 820-0086-B (ECO F017) The 'MacMan' logo has been dropped, along with the J8 external\nvideo connector. Added alternate oscillator-based system clock at Y1.\n\n#8 820-0086-C (ECO F123) 1983 production release. It's not clear what changes were made\nfor this last revision other than consolidating changes and a few components appear to \nhave been moved to make room for a 'Macintosh' logo along the rear left side. Title\nblock on schematic says \"050-0073-C\".\n\nThe 630-0118 board in my 512k is a dual 128k/512k board with the select circuit."
-    (at 19.05 88.9 0)
+  (text "Board Revision Notes:\n\nCase Label		Serial#							Logic Board Schematic/Part#\nmacintosh		F35xxxxxM0001 to F4xxxxxxxxxxx        820-0086-C/F (630-0101)\nmacintosh 128k	F4xxxxxxM0001 to F5xxxxxxxxxxx        820-0141-A (630-0101)\nmacintosh 512k/e  F44xxxxxM0001 to F7xxxxxxxxxxx        820-0141-A (630-0118)\n\n#6 820-0086-A (ECO M045). MAC512, 200 build, May 1983 Folon 'MacMan' logo. 6th PAL\nhas been added, the TSG (Timing Signal Generator). Uses a transistor-\nbuffered system clock at Y1.\n\n#7 820-0086-B (ECO F017) The 'MacMan' logo has been dropped, along with the J8 external\nvideo connector. Added alternate oscillator-based system clock at Y1.\n\n#8 820-0086-C (ECO F123) 1983 production release. It's not clear what changes were made\nfor this last revision other than consolidating changes and a few components appear to \nhave been moved to make room for a 'Macintosh' logo along the rear left side. Title\nblock on schematic says \"050-0073-C\".\n\nThe 630-0118 board in my 512k is a dual 128k/512k board with the select circuit.\n\n7/20/2023: I purchased an original 128k board from a lot of 3 from the son\nof the founder of Sun Remarketing. Although the serial number sticker\nwas damaged, another board in the lot had the number \"LB045400002100\".\n"
+    (at 19.05 94.996 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 679f46ad-d09e-4d88-911b-7f3c88538859)
   )
-  (text "To have traces on (front to back) layers 1 & 4, and 2, 3 VCC & GND do the following (and I can hope this works):\n\nCreate a Zone on later 2 that is connected to VCC and fills almost the entire board.\nDo the same on layer 3, but connect to GND.  Now all power and ground pins on DIPs are connected.  \nSMD's are another story.\nExport the .dsn file for Freeroute.\n\nIn freeroute:\n\nIt is essential that freeroute know that all VCC and GND pins are connected.  \nThus it should not try to route those traces.\nIt must know to avoid the conduction areas so it will not route on layers 2 or 3.\nVias must be allowed.  And they must not connect to layers 2 or 3.\nBack in Kicad, re-fill the zones so they avoid the vias.  Check by looking at only \nlayer 2, e.g.; then check layer 3.  You may add copper pours on layers 1 & 4, if you wish."
-    (at 18.542 171.45 0)
+  (text "To have traces on (front to back) layers 1 & 4, and 2, 3 VCC & GND do the following:\n\nCreate a Zone on later 2 that is connected to VCC and fills almost the entire board.\nDo the same on layer 3, but connect to GND.  Now all power and ground pins on DIPs are connected.  \nSMD's are another story.\nExport the .dsn file for Freeroute.\n\nIn freeroute:\n\nIt is essential that freeroute know that all VCC and GND pins are connected.  \nThus it should not try to route those traces.\nIt must know to avoid the conduction areas so it will not route on layers 2 or 3.\nVias must be allowed.  And they must not connect to layers 2 or 3.\nBack in Kicad, re-fill the zones so they avoid the vias.  Check by looking at only \nlayer 2, e.g.; then check layer 3.  You may add copper pours on layers 1 & 4, if you wish."
+    (at 18.034 182.118 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid b1993328-799e-475a-aac4-fddd4c55e9fc)
   )
-  (text "Notes:\n\nAll capacitors are axial.\n\nRC filter networks are likely Bourns 4120R-601-250/201LF (25-ohm, 200pF)\n\nThe 820-0086-C logic board is solely 128k and the original issue from 1984.\n  It uses 4264-150 DRAM chips. \n\nThe 820-0141 version should be the 128k/512k model with the addition\n  of an AS253 at location 13G with a small jumper.\n\nIn the internal layers, there is a 2.5mm break in the copper pour which\ncreates the separation between logic and earth grounds. It meanders from\narea A1, across to A15, and then down to and including the keyboard jack.\nThey appear to be connected by a trace under capacitor C5 above the\n4016 chip. It appears to be in Layer 3 of the board."
-    (at 19.304 127.254 0)
+  (text "Notes:\n\nAll capacitors are axial.\n\nRC filter networks are likely Bourns 4120R-601-250/201LF (25-ohm, 200pF)\n\nThe 820-0086-C logic board is solely 128k and the original issue from 1984.\n  It uses 4264-150 DRAM chips. \n\nThe 820-0141 version should be the 128k/512k model with the addition\n  of an AS253 at location 13G with a small jumper.\n\nIn all layers, there is a 2.5mm break in the copper pour which\ncreates the separation between logic and earth grounds. It meanders from\narea A1, across to A15, and then down to and including the keyboard jack.\nThey appear to be connected by a trace under capacitor C5 above the\n4016 chip in Layer 3 (GND) of the board."
+    (at 18.796 134.112 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid e0f45087-dea1-4e5f-96ec-1933d4985221)
   )
@@ -804,7 +804,7 @@
       (reference "C4") (unit 1) (value ".1uF") (footprint "Capacitor_THT:C_Axial_L3.8mm_D2.6mm_P7.50mm_Horizontal")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/e6323431-a393-47df-be2c-6954907dd23a"
-      (reference "C5") (unit 1) (value "33uF") (footprint "Capacitor_THT:CP_Axial_L11.0mm_D6.0mm_P18.00mm_Horizontal")
+      (reference "C5") (unit 1) (value "33uF") (footprint "Capacitor_THT:CP_Axial_L11.0mm_D5.0mm_P18.00mm_Horizontal")
     )
     (path "/de4fdae0-41e4-4194-88b4-8ae352cf053f/d5e23db5-a9fe-4a11-aaea-2f60503c0d9d"
       (reference "C6") (unit 1) (value "470pF") (footprint "Capacitor_THT:C_Axial_L3.8mm_D2.6mm_P7.50mm_Horizontal")
@@ -849,10 +849,10 @@
       (reference "C19") (unit 1) (value "470pF") (footprint "Capacitor_THT:C_Axial_L3.8mm_D2.6mm_P7.50mm_Horizontal")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/d56790fc-0ad5-4165-a5f1-08a0a267882a"
-      (reference "C20") (unit 1) (value "33uF") (footprint "Capacitor_THT:CP_Axial_L11.0mm_D6.0mm_P18.00mm_Horizontal")
+      (reference "C20") (unit 1) (value "33uF") (footprint "Capacitor_THT:CP_Axial_L11.0mm_D5.0mm_P18.00mm_Horizontal")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/cbfceff7-3385-443e-95ee-7d2fccfdfbc4"
-      (reference "C21") (unit 1) (value ".1uF") (footprint "Capacitor_THT:C_Axial_L5.1mm_D3.1mm_P10.00mm_Horizontal")
+      (reference "C21") (unit 1) (value ".1uF") (footprint "Capacitor_THT:C_Axial_L3.8mm_D2.6mm_P7.50mm_Horizontal")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/181ddae1-ce75-4ebc-8c68-18283bfc60f8"
       (reference "C22") (unit 1) (value "4.7uF") (footprint "Capacitor_THT:CP_Axial_L11.0mm_D5.0mm_P18.00mm_Horizontal")
@@ -966,28 +966,28 @@
       (reference "FB5") (unit 1) (value "75") (footprint "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P7.62mm_Horizontal")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/5b707f0b-8f0d-46d2-8528-392da835298c"
-      (reference "H201") (unit 1) (value "MountingHole_Pad") (footprint "MountingHole:MountingHole_2.7mm_M2.5_Pad")
+      (reference "H201") (unit 1) (value "MountingHole_Pad") (footprint "TestPoint:TestPoint_Plated_Hole_D2.0mm")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/c10dfd53-18da-45d9-b7ef-9b98035f26b7"
-      (reference "H202") (unit 1) (value "MountingHole_Pad") (footprint "MountingHole:MountingHole_2.7mm_M2.5_Pad")
+      (reference "H202") (unit 1) (value "MountingHole_Pad") (footprint "TestPoint:TestPoint_Plated_Hole_D2.0mm")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/ce27f151-3327-4c42-816b-e93a8e2afe9f"
-      (reference "H203") (unit 1) (value "MountingHole_Pad") (footprint "MountingHole:MountingHole_2.7mm_M2.5_Pad")
+      (reference "H203") (unit 1) (value "MountingHole_Pad") (footprint "TestPoint:TestPoint_Plated_Hole_D2.0mm")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/17ce8d76-a104-427d-a056-2425c14fb057"
-      (reference "H204") (unit 1) (value "MountingHole_Pad") (footprint "MountingHole:MountingHole_2.7mm_M2.5_Pad")
+      (reference "H204") (unit 1) (value "MountingHole_Pad") (footprint "TestPoint:TestPoint_Plated_Hole_D2.0mm")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/c74d1f55-f041-4574-b904-8bfd712e8128"
-      (reference "H205") (unit 1) (value "MountingHole_Pad") (footprint "MountingHole:MountingHole_2.7mm_M2.5_Pad")
+      (reference "H205") (unit 1) (value "MountingHole_Pad") (footprint "TestPoint:TestPoint_Plated_Hole_D2.0mm")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/81974273-6ec9-4e36-b7a5-6da69181751d"
-      (reference "H206") (unit 1) (value "MountingHole_Pad") (footprint "MountingHole:MountingHole_2.7mm_M2.5_Pad")
+      (reference "H206") (unit 1) (value "MountingHole_Pad") (footprint "TestPoint:TestPoint_Plated_Hole_D2.0mm")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/87280b50-0c3c-41fe-add1-ac0e0db65994"
-      (reference "H207") (unit 1) (value "MountingHole_Pad") (footprint "MountingHole:MountingHole_2.7mm_M2.5_Pad")
+      (reference "H207") (unit 1) (value "MountingHole_Pad") (footprint "TestPoint:TestPoint_Plated_Hole_D2.0mm")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/07966900-9ab2-411a-8b53-5c234d0787c8"
-      (reference "H208") (unit 1) (value "MountingHole_Pad") (footprint "MountingHole:MountingHole_2.7mm_M2.5_Pad")
+      (reference "H208") (unit 1) (value "MountingHole_Pad") (footprint "TestPoint:TestPoint_Plated_Hole_D2.0mm")
     )
     (path "/ae841087-0a6c-4684-b14f-9b2edf1c52e9/3236da5b-1a8c-474d-a999-c9d6840b1109"
       (reference "H209") (unit 1) (value "MountingHole") (footprint "MountingHole:MountingHole_2.7mm_M2.5")

@@ -446,7 +446,7 @@
       "gencad": "",
       "idf": "",
       "netlist": "",
-      "specctra_dsn": "Apple_PCB_820-0086-C.dsn",
+      "specctra_dsn": "../../../../Public/Apple_PCB_820-0086-C.dsn",
       "step": "",
       "vrml": ""
     },

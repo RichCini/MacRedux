@@ -1503,6 +1503,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 09d94184-f47e-41b7-ae0c-355e40d15ab4)
   )
+  (text "NOTE: On the version of the board I have, an additional 2.2k RP\nis fly-attached to RS0-RS3 of U15D, or A9-A12. Best guess\nis that it was to deglitch those pins. Unsure if this was\nfixed in subsequent versions of the board like the 128k/512k\nhybrid."
+    (at 217.678 96.266 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 551320da-0f29-4a7b-9980-1e2193ce06cb)
+  )
 
   (global_label "D11" (shape bidirectional) (at 236.474 41.148 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))

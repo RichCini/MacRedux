@@ -3029,14 +3029,14 @@
     (uuid ffc945ba-f109-46f6-8c94-98750b584740)
   )
 
-  (text "Note: FB are on the schematic as\n27-ohm resistors."
-    (at 289.306 78.486 0)
-    (effects (font (size 1.27 1.27)) (justify left bottom))
-    (uuid 28a2d1bb-e8bf-4f7a-9c8b-b486ef260768)
-  )
   (text "Floppy - Ext/Int" (at 167.386 18.796 0)
     (effects (font (size 2.0066 2.0066) (thickness 0.4013) bold) (justify left bottom))
     (uuid 348028f8-a3af-4c4c-9ce4-75e16c2f497b)
+  )
+  (text "NOTE: Production board used packs with the\nnumber CRL8425L (which looks like a date)\nand \"115-0002\"."
+    (at 357.886 82.804 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 393b1a55-5fc2-4bb9-8ec7-3e57a06bef6d)
   )
   (text "Modem" (at 39.878 18.034 0)
     (effects (font (size 2.0066 2.0066) (thickness 0.4013) bold) (justify left bottom))
@@ -3058,6 +3058,11 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid bbea2db8-c99c-43cb-8e4c-c1f7cccdf554)
   )
+  (text "NOTE: FB are on the schematic as\n27-ohm resistors. Must have been\na late design change."
+    (at 288.29 77.978 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid c1b79d69-f6eb-4e0b-abaf-056603122e14)
+  )
   (text "Glitch filters are on the side of the schematic." (at 47.244 54.102 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid c314b10c-0bd9-4344-acc3-49a07567b5be)
@@ -3071,6 +3076,11 @@
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid c72a07c0-92d3-4ed5-8f38-7469f37dec0c)
   )
+  (text "NOTE: FB are on the schematic as\n27-ohm resistors. Must have been\na late design change."
+    (at 235.712 198.628 0)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid c8e4fc58-c295-4ff6-95bb-df39a752f965)
+  )
   (text "EMI Deglitch Packs" (at 357.886 20.574 0)
     (effects (font (size 2.0066 2.0066) (thickness 0.4013) bold) (justify left bottom))
     (uuid d117332a-da4f-4cc8-be2e-223b482b50c2)
@@ -3082,6 +3092,11 @@
   (text "TX" (at 96.266 76.454 0)
     (effects (font (size 2.0066 2.0066) (thickness 0.4013) bold) (justify left bottom))
     (uuid e354191a-1916-46f4-af0b-59ca34508172)
+  )
+  (text "NOTE: On the production board, C49/C50\nare 1N5234B 6.2v/550mW zener diodes with\nthe anodes to ground...voltage clamps?"
+    (at 242.824 227.838 180)
+    (effects (font (size 1.27 1.27)) (justify right bottom))
+    (uuid ece6b5ec-b6df-42a1-8304-978a564e19c5)
   )
 
   (label "MS.FY2" (at 278.384 56.134 180)
